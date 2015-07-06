@@ -19,7 +19,7 @@ No stable version exists so far.
 ```PHP
 // Daemonize the current process:
 // - process will be detached from terminal and becomes process group leader
-// - stdin/stderr will be closed and reopened to the supplied filed (default is /dev/null)
+// - stdin/stderr will be closed and reopened to the supplied files (default is /dev/null)
 // - daemon will re-exec itself so STDIN, STDOUT, STDERR constants are fixed
 \nexxes\Daemon::daemonize('run/process.pid', 'log/stderr.log', 'log/stdout.log', 'stdin.txt');
 
