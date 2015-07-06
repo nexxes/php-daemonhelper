@@ -1,7 +1,20 @@
 # php-daemonhelper
 Helper classes for daemon processes written in PHP, licenced under the LGPL v3.
 
-## Daemonize a process
+## Installation
+
+Just put the following in your ```composer.json``` file inside your project root.
+No stable version exists so far.
+
+```Json
+"require": {
+  "nexxes/daemonhelper": "*@dev"
+}
+```
+
+## Features
+
+### Daemonize a process
 
 ```PHP
 // Daemonize the current process:
@@ -14,7 +27,7 @@ Helper classes for daemon processes written in PHP, licenced under the LGPL v3.
 // ...
 ```
 
-## WatchDog to restart a worker process on error
+### WatchDog to restart a worker process on error
 
 ```PHP
 // Fork the real worker process
