@@ -17,7 +17,6 @@ Helper classes for daemon processes written in PHP, licenced under the LGPL v3.
 ## WatchDog to restart a worker process on error
 
 ```PHP
-
 // Fork the real worker process
 \nexxes\WatchDog::run();
 
