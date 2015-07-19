@@ -58,12 +58,76 @@ class WatchDogTest extends \PHPUnit_Framework_TestCase
         });
     }
 
+    /**
+     * Check WatchDog restarts processes killed by SIGKILL
+     *
+     * @test
+     */
+    public function testKilled()
+    {
+        $this->executeWatchdogTest(2, function ($tempfile) {
+            clearstatcache();
 
+            if (file_exists($tempfile)) {
+                file_put_contents($tempfile, PHP_EOL . time() . ' ' . posix_getpid() , FILE_APPEND);
+                exit(0);
+            }
+
+            else {
+                file_put_contents($tempfile, time() . ' ' . posix_getpid(), FILE_APPEND);
+                posix_kill(posix_getpid(), SIGKILL);
+            }
+        });
+    }
+
+    /**
+     * Check WatchDog restarts processes killed by SIGINT
+     *
+     * @test
+     */
+    public function testInterrupted()
+    {
+        $this->executeWatchdogTest(2, function ($tempfile) {
+            clearstatcache();
+
+            if (file_exists($tempfile)) {
+                file_put_contents($tempfile, PHP_EOL . time() . ' ' . posix_getpid() , FILE_APPEND);
+                exit(0);
+            }
+
+            else {
+                file_put_contents($tempfile, time() . ' ' . posix_getpid(), FILE_APPEND);
+                posix_kill(posix_getpid(), SIGINT);
+            }
+        });
+    }
+
+    /**
+     * Check WatchDog restarts processes killed by SIGTERM
+     *
+     * @test
+     */
+    public function testTerminated()
+    {
+        $this->executeWatchdogTest(2, function ($tempfile) {
+            clearstatcache();
+
+            if (file_exists($tempfile)) {
+                file_put_contents($tempfile, PHP_EOL . time() . ' ' . posix_getpid() , FILE_APPEND);
+                exit(0);
+            }
+
+            else {
+                file_put_contents($tempfile, time() . ' ' . posix_getpid(), FILE_APPEND);
+                posix_kill(posix_getpid(), SIGTERM);
+            }
+        });
+    }
 
     /**
      *
      */
-    public function executeWatchdogTest($expectedLines, callable $childCallback)
+    protected function executeWatchdogTest($expectedLines, callable $childCallback)
     {
         $tempfile = tempnam(sys_get_temp_dir(), __FUNCTION__ . '__');
         unlink($tempfile);
