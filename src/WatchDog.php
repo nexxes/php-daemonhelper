@@ -80,7 +80,7 @@ abstract class WatchDog
 
                 // Abort on normal exit (status: 0)
                 if (\pcntl_wifexited($childStatus) && (\pcntl_wexitstatus($childStatus) === 0)) {
-                    break;
+                    break 2;
                 }
             }
         } while (true);
