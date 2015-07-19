@@ -34,6 +34,28 @@ No stable version exists so far.
 \nexxes\WatchDog::run();
 
 // Code for the worker process
-// If process dies with exit-value != 0, we start here again
+// If the process dies with exit-value != 0,
+// we start here again and again and again
 // ..
+```
+
+### WatchDog for multiple worker processes
+
+```PHP
+// Multiple processes can be handled by a watchdog instance
+$watchdog = new \nexxes\WatchDog();
+
+$watchdog->addProcess('processName1', function() {
+  // Code for process 1
+  // If the process dies with exit-value != 0,
+  // we start here again ...
+});
+
+$watchdog->addProcess('processNameX', function() {
+  // Register as many processes as you need.
+  // You can register anything callable, not only closures.
+});
+
+// Execute the processes and restart them if needed:
+$watchdog->start();
 ```
