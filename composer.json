@@ -16,7 +16,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "nexxes\\": "test/"
+            "nexxes\\": "tests/"
         }
     },
     "require": {
