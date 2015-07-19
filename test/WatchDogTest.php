@@ -8,7 +8,10 @@
 namespace nexxes;
 
 /**
+ * Tests to verify WatchDog::run() method works = WatchDog works in "single watched process without callback" mode
+ *
  * @author Dennis Birkholz <dennis.birkholz@nexxes.net>
+ * @covers \nexxes\WatchDog
  */
 class WatchDogTest extends \PHPUnit_Framework_TestCase
 {
