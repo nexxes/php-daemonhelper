@@ -1,8 +1,8 @@
 <?php
 /*
- * (c) 2015 by nexxes Informationstechnik GmbH
+ * (c) 2015 by Dennis Birkholz / nexxes Informationstechnik GmbH
  * All rights reserved.
- * For the license to use this software, see the provided LICENSE file.
+ * For the license to use this software, see the LICENSE file provided with this package.
  */
 
 namespace nexxes;
@@ -34,6 +34,7 @@ class Daemon
      * @param string $stdout File to redirect STDOUT to
      * @param string $stdin File to read STDIN from
      * @throws \RuntimeException
+     * @return true
      */
     public static function daemonize($pidfile = null, $stderr = '/dev/null', $stdout = '/dev/null', $stdin = '/dev/null')
     {
