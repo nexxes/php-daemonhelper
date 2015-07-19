@@ -1,8 +1,8 @@
 <?php
 /*
- * (c) 2015 by nexxes Informationstechnik GmbH
+ * (c) 2015 by Dennis Birkholz / nexxes Informationstechnik GmbH
  * All rights reserved.
- * For the license to use this software, see the provided LICENSE file.
+ * For the license to use this software, see the LICENSE file provided with this package.
  */
 
 namespace nexxes;
@@ -16,13 +16,15 @@ abstract class WatchDog
 {
     /**
      * Start the watchdog
-     * The watchdog will fork and the child's controll flow will continue after the WatchDog::run invocation.
+     * The watchdog will fork and the child's control flow will continue after the WatchDog::run invocation.
      * If the child dies with an error return value, it is restarted.
-     * Normal termination (exit(0);) will also terminate the watchdog.
+     * Normal termination (exit(0);) will also terminate the watchdog or make him return True if $returnWhenFinished was enabled.
+     *
+     * @param bool $returnWhenFinished Whether WatchDog should return or exit(0) when child finished gracefully
+     * @return bool False in child processes, True if $returnWhenFinished was set to True in parent process
      */
-    public static function run()
+    public static function run($returnWhenFinished = false)
     {
-        $started = 0;
         $try = 0;
         $signalInfo = null;
         $childStatus = null;
@@ -38,7 +40,7 @@ abstract class WatchDog
             elseif ($pid === 0) {
                 \cli_set_process_title('php ' . $_SERVER['argv'][0]);
                 \pcntl_sigprocmask(SIG_SETMASK, []);
-                return;
+                return false;
             }
 
             $started = time();
@@ -78,9 +80,15 @@ abstract class WatchDog
 
                 // Abort on normal exit (status: 0)
                 if (\pcntl_wifexited($childStatus) && (\pcntl_wexitstatus($childStatus) === 0)) {
-                    exit(0);
+                    break;
                 }
             }
         } while (true);
+
+        if ($returnWhenFinished) {
+            return true;
+        } else {
+            exit(0);
+        }
     }
 }
