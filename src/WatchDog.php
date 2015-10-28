@@ -175,7 +175,9 @@ class WatchDog
 
         // Forked, do some cleanup
         elseif ($pid === 0) {
-            \cli_set_process_title('php ' . $_SERVER['argv'][0] . ' (' . $name . ': ' . ((isset($this->processStartCounter[$name]) ? $this->processStartCounter[$name] : 0) + 1) . ')');
+            if (function_exists('\\cli_set_process_title')) {
+                \cli_set_process_title('php ' . $_SERVER['argv'][0] . ' (' . $name . ': ' . ((isset($this->processStartCounter[$name]) ? $this->processStartCounter[$name] : 0) + 1) . ')');
+            }
             \pcntl_sigprocmask(SIG_SETMASK, []);
 
             unset($this->processCallbacks);
