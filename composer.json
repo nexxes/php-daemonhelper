@@ -2,7 +2,7 @@
     "name": "nexxes/daemonhelper",
     "description": "Helper classes for daemon processes written in PHP",
     "type": "library",
-    "license": "LGPL3",
+    "license": " LGPL-3.0-only",
     "authors": [
         {
             "name": "Dennis Birkholz",
